@@ -31,8 +31,7 @@ let chatAutoClose;
 let brushSize = 10;
 let userJoined = false; // audio
 let usersInCall = document.querySelector(".calls .btn-label p");
-let isTickMuted = localStorage.getItem("sddMute") === "true" ? true : false;
-let tick;
+
 
 // game settings
 const roundDuration = 60;
@@ -71,7 +70,6 @@ function joinRoom(userName){
       canvas: [],
       users: [],
       colls: "",
-      lastCollision: Date.now(),
       created: Date.now(),
       locked: false,
       bg: "white",
@@ -178,20 +176,6 @@ socket.on("newUser", (user) => {
   }
 })
 
-socket.on("collided", (collision) => {
-  playAudio(['sounds/oop.mp3']).volume(0.3).play()
-
-  document.body.classList.add("collided")
-
-  updateCanvasColor(collision.bg, false);
-
-  showMessage(`<li class="status collision"><p>${collision.p1.userName} & ${collision.p2.userName} broke social distance!</p></li>`, false)
-
-
-  setTimeout(() => {
-    document.body.classList.remove("collided")
-  }, 1000);
-})
 
 
 socket.on("playerDisconnect", (user) => {
@@ -303,11 +287,7 @@ function drawLine(x0, y0, x1, y1, color, emit, u, strokeWidth){
   });
 }
 
-let inviteFromTwitter = () => {
-  let gameUrl = document.querySelector(".shareLink").value
-  let inviteText = `Join me on Social Distance Drawing! 🎨 ${gameUrl}`
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURI(inviteText)}&button_hashtag=SocialDistanceDrawing`)
-}
+
 
 function onMouseDown(e){
   drawing = true;
@@ -647,9 +627,7 @@ document.addEventListener("click", (e) => {
     }
   }
 
-  if(e.target.classList.contains("tweet") || e.target.closest(".tweet")){
-    inviteFromTwitter()
-  }
+ 
 })
 
 // add invite link
@@ -828,7 +806,7 @@ firstRnStartBtn.addEventListener("click", () => {
     firstRnContent.innerHTML = `
       <p>Looks like you are the only one here! The game is more fun with friends, so you can start off by inviting some with the following link:</p>
       <input type="text" value="" readonly class="shareLink"/>
-      <span class="tweet"><i data-feather="twitter"></i><em>Invite friends from Twitter!</em></span>
+      
       <ul class="firstRunPlayersList"><li>Waiting for players to join...</li></ul>
     `
 
@@ -859,22 +837,6 @@ function startTimer(duration, display, currentRound) {
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
       display.textContent = minutes + ":" + seconds;
-
-      if(timer < 16 && !soundPlayed && currentRound){
-        let tAudio = document.querySelector(".buttons .timer audio")
-        if(tAudio) tAudio.remove();
-
-        let t = document.querySelector(".buttons .timer");
-        t.classList.add("yellow")
-        
-        playAudio(['sounds/tick.mp3'], t).volume(userJoined ? 0.1 : 0.3).play()
-
-        if(isTickMuted){
-          document.querySelector(".buttons .timer audio").muted = true;
-        } 
-
-        soundPlayed = true;
-      }
 
       if (--timer < 0) { // timer done
         soundPlayed = false;
@@ -1170,26 +1132,3 @@ function dropdown(elem, className){
     }
   })
 }
-
-let tickMute = document.querySelector(".timer e")
-
-if(isTickMuted){
-  document.querySelector(".timer").classList.add("muted")
-}
-
-tickMute.addEventListener("click", () => {
-  let isMuted = localStorage.getItem("sddMute") === "true" ? true : false;
-  let tick = document.querySelector(".buttons .timer audio");
-
-  if(isMuted){
-    localStorage.setItem("sddMute", "false")
-    document.querySelector(".timer").classList.remove("muted")
-    tick.muted = false;
-    isTickMuted = false;
-  } else{
-    localStorage.setItem("sddMute", "true")
-    tick.muted = true;
-    document.querySelector(".timer").classList.add("muted")
-    isTickMuted = true;
-  }
-})

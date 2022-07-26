@@ -2,7 +2,7 @@
 <html lang="en" class="game">
 <head>
   <meta charset="UTF-8">
-  <title>Social Distance Drawing</title>
+  <title>Draw</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
   <link rel="shortcut icon" type="image/png" href="./assets/favicon.ico"/>
@@ -14,17 +14,10 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://distancedrawing.app/">
-  <meta property="og:title" content="Social Distance Drawing">
-  <meta property="og:description" content="Draw with your friends without breaking social distancing rules. ">
-  <meta property="og:image" content="https://distancedrawing.app/assets/cover.png">
+  <meta property="og:url" content="https://draw.aminemahdane.me/">
+  <meta property="og:title" content="Draw">
+  <meta property="og:description" content="Draw with your friends. ">
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://distancedrawing.app/">
-  <meta property="twitter:title" content="Social Distance Drawing">
-  <meta property="twitter:description" content="Draw with your friends without breaking social distancing rules. ">
-  <meta property="twitter:image" content="https://distancedrawing.app/assets/cover.png">
 </head>
 <body class="game">
   <header class="toolbar">
@@ -81,7 +74,7 @@
             <p>Share the link below to invite others!</p>
             <div class="share">
               <input type="text" value="" readonly class="shareLink"/>
-              <span class="tweet"><i data-feather="twitter"></i><em>Invite friends from Twitter!</em></span>
+              
             </div>
             <label class="chat-close"><input type="checkbox" name="chatClose"/>Automatically close chat when drawing</label>
             <ul></ul>
@@ -115,10 +108,9 @@
           <button class="modal__close" aria-label="Close modal" data-micromodal-close=""></button>
         </header>
         <div class="modal__content" id="modal-1-content">
-          <p>Draw anything you want with your friends -- but there's a catch: social distancing 🚨</p>
-          <p>You can draw whatever you want, as long as you don't break social distancing rules. When you draw very close to other players, the canvas will automatically clear and you'll have to start over 👀</p>
+          <p>Draw anything you want with your friends</p>
           <p>Each round, we will give you something to draw. At the end of each round, everyone chooses a winner. After 5 rounds, you'll have your winner 👑</p>
-          <p>So get drawing, and have fun! And remember: we are social distancing!</p>
+          <p>So get drawing!</p>
         </div>
         
         <footer class="modal__footer">
@@ -139,14 +131,5 @@
   <script src="./lib/simplepeer.min.js"></script>
   <script src="./lib/calls.min.js"></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48569869-3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-48569869-3');
-  </script>
-
 </body>
 </html>

@@ -64,16 +64,6 @@ io.on('connection', (socket) => {
   })
   
 
-  socket.on('drawing', (data) => {
-    let updatedUserPositions = updateRoomCanvas(rid, data)
-    let currentUser = getUserFromRoom(rid, uid)
-
-    if(currentUser){
-      checkCollisions(currentUser, updatedUserPositions)
-    }
-
-    socket.broadcast.to(rid).emit('drawing', data)
-  });
 
   socket.on('userMoving', (data) => {
     socket.broadcast.to(rid).emit('userMoving', data)
@@ -220,50 +210,8 @@ io.on('connection', (socket) => {
     io.to(payload.callerID).emit('rcvSig', { signal: payload.signal, id: socket.id });
   });
 
-  function checkCollisions(currentUser, updatedUserPositions){
-    // collision grace for everyone in general
-    let {lastCollision} = getRoom(rid)
-    
-    let timeNow = Date.now();
-    let lastCollDiff = Math.abs(timeNow-lastCollision) / 1000
+  
 
-    if(lastCollDiff < 5){
-      return;
-    }
-
-    // if there's not been a collision in the last 5 seconds
-    // we start collision detection
-    let ldP1 = currentUser.lastDraw;
-
-    for(user in updatedUserPositions){  
-      user = updatedUserPositions[user];
-
-      if(user.id !== currentUser.id){
-        let dx = currentUser.x - user.x; 
-        let dy = currentUser.y - user.y;
-
-        let distance = Math.sqrt((dx * dx) + (dy * dy));
-        let ldP2 = user.lastDraw;
-
-        let timeDiff = Math.abs(ldP2-ldP1) / 1000
-
-        if (distance < 8 && timeDiff < 2) {
-          let room = resetRoomCanvas(rid, Date.now())
-
-          let collision = {
-            p1: currentUser,
-            p2: user,
-            distance,
-            dx,
-            dy,
-            bg: room.bg
-          }
-
-          io.to(rid).emit("collided", collision)
-        }
-      }
-    }
-  }
 });
 
 app.get("*", (req, res) => {
