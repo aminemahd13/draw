@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "description": "A simple collaborative whiteboard using socket.io",
   "main": "server.js",
+    "engines": {
+    "node": "14.16.0"
+  },
   "dependencies": {
     "@node-minify/core": "^5.3.0",
     "@node-minify/uglify-es": "^5.3.0",
