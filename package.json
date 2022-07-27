@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "A simple collaborative whiteboard using socket.io",
   "main": "server.js",
-    "engines": {
+  "engines": {
     "node": "14.16.0"
   },
   "dependencies": {
